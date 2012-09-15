@@ -4,7 +4,7 @@ require 'curses'
 module Cree
   module Models
 
-    # A base class for things that are rendered on the 
+    # A base class for things that are rendered on the
     # screen
     class Model
 
@@ -13,9 +13,7 @@ module Cree
       def initialize(options={})
         @x = options[:x] || 0
         @y = options[:y] || 0
-
-        @frame = 0
-        @frameRate = 0 # Frames per second.
+        @frame = options[:frame] || 0
       end
 
       def render(window)
@@ -23,7 +21,7 @@ module Cree
       end
 
       protected
-   
+
       def render_sprite(window, sprite, options={})
         x = options[:x] || @x
         y = options[:y] || @y

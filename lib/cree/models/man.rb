@@ -1,19 +1,48 @@
 require_relative 'model'
 
-module Cree
-  module Models
-    class Man < Model
-
-      @@sprite = <<EOF
- -----
-| o o |
-|     |
-|  =  | 
- -----
+FACE = <<EOF
+ ------
+| o  o |
+|      |
+|  __  |
+|      |
+ ------
 EOF
 
+BLINK = <<EOF
+ ------
+| -  - |
+|      |
+|  __  |
+|      |
+ ------
+EOF
+
+
+
+
+module Cree
+  module Models
+
+    class Man < Model
+
+      @@sprites = [
+        {
+          :text => BLINK,
+          :duration => 0.1
+        },
+        {
+          :text => FACE,
+          :duration => 0.4
+        }
+      ]
+
       def render(window)
-        render_sprite(window, @@sprite)
+        @lastChange = @lastChange || @frame
+        if @frame 
+        sprite = @@sprites[(@frame % 50) < 3 ? 0 : 1]
+
+        render_sprite(window, sprite[:text])
       end
 
       def up
