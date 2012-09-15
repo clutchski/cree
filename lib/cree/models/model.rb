@@ -11,8 +11,8 @@ module Cree
       attr_accessor :frame
 
       def initialize(options={})
-        @x = 0
-        @y = 0
+        @x = options[:x] || 0
+        @y = options[:y] || 0
 
         @frame = 0
         @frameRate = 0 # Frames per second.
