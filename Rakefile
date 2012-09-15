@@ -4,3 +4,7 @@ task :run do
 end
 
 task :default => :run
+
+task :clean do
+  sh "rm *.log"
+end
