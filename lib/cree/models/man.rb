@@ -18,6 +18,16 @@ BLINK = <<EOF
  ------
 EOF
 
+BUG = <<EOF
+ ------
+| 0  0 |
+|      |
+|  __  |
+|      |
+ ------
+EOF
+
+
 
 
 
@@ -29,19 +39,36 @@ module Cree
       @@sprites = [
         {
           :text => BLINK,
-          :duration => 0.1
+          :duration => 0.1,
+          :next_frame => 0
         },
         {
+          :text => BUG,
+          :duration => 0.2,
+          :next_frame => 0
+        },
+        {
+          :text => BLINK,
+          :duration => 0.3,
+          :next_frame => 0
+        },
+       {
           :text => FACE,
-          :duration => 0.4
-        }
+          :duration => 4,
+          :next_frame => 0
+        },
+
+
       ]
 
       def render(window)
-        @lastChange = @lastChange || @frame
-        if @frame 
-        sprite = @@sprites[(@frame % 50) < 3 ? 0 : 1]
-
+        @sprite_index ||= 0
+        sprite = @@sprites[@sprite_index]
+        if sprite[:next_frame] <= @frame
+          @sprite_index = (@sprite_index + 1) % @@sprites.length
+          sprite = @@sprites[@sprite_index]
+          sprite[:next_frame] = @frame + (sprite[:duration] * @frame_rate)
+        end
         render_sprite(window, sprite[:text])
       end
 

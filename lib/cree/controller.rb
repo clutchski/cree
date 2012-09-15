@@ -22,7 +22,7 @@ module Cree
       @view = View.new @logger
 
       # Initialize our models
-      @man =  Models::Man.new
+      @man =  Models::Man.new(:frame_rate => @frame_rate)
 
       # All the things we'll draw.
       @models = [@man]

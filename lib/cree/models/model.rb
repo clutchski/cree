@@ -14,6 +14,7 @@ module Cree
         @x = options[:x] || 0
         @y = options[:y] || 0
         @frame = options[:frame] || 0
+        @frame_rate = options[:frame_rate] || 1
       end
 
       def render(window)
