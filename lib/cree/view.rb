@@ -5,11 +5,13 @@ module Cree
   class View
 
     def initialize(logger)
-      Curses::noecho
+      Curses::init_screen
+      Curses::noecho 
       Curses::curs_set 0
-      #Curses::cbreak
       @window = Curses::Window.new(0, 0, 0, 0)
       @window.keypad true
+      @window.timeout = 0 # Don't block waiting for input
+
       @logger = logger
       @keys_to_commands = {
         'q' => :quit,
@@ -36,14 +38,14 @@ module Cree
       @window.close
     end
 
+    # Return the given user command, or nil if no command
+    # was issued.
     def get_command
-      command = nil
-      while not command
-        ch = @window.getch
-        @logger.debug "pressed #{ch}"
-        command = @keys_to_commands[ch]
-      end
-      command
+      ch = @window.getch
+      return nil unless ch
+
+      @logger.debug "pressed #{ch}"
+      @keys_to_commands[ch]
     end
 
   end
